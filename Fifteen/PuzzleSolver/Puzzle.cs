@@ -1,39 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PuzzleSolver
 {
     public class Puzzle
     {
-        private static Random random = new Random();
+        private byte[,] Elements { get; set; }
 
-        private int[,] puzzle;
+        private Tuple<byte, byte> Blank { get; set; }
 
-        public Puzzle(int dimentionLenght)
+        public Puzzle(byte[,] elements)
         {
-            puzzle = new int[dimentionLenght, dimentionLenght];
-
-            int[] values = new int[dimentionLenght * dimentionLenght];
-            for (int i = 0; i < values.Length; i++)
-            {
-                values[i] = i;
-            }
-            values = values.OrderBy(x => random.Next(0, dimentionLenght)).ToArray();
-
-            for (int i = 0; i < values.Length; i++)
-                puzzle[i / dimentionLenght, i % dimentionLenght] = values[i];
+            Elements = elements;
         }
 
-        public int GetValue(int row, int column) => puzzle[row, column];
+        public int GetValue(byte row, byte column) => Elements[row, column];
 
-        public int this[int row, int column] => GetValue(row, column);
+        public int this[byte row, byte column] => GetValue(row, column);
 
-        public int[,] ToArray()
+        public void MoveBlank(Direction direction)
         {
-            return puzzle;
+            throw new NotImplementedException();
+        }
+
+        public Direction[] GetPossibleMoves()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Tuple<byte, byte> GetBlankPosition()
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[,] ToMatrix()
+        {
+            return Elements;
         }
     }
 }

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleSolver", "PuzzleSolve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FifteenTest", "FifteenTest\FifteenTest.csproj", "{64EF7E44-7F14-4EEE-893A-5C7150EE7065}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Program", "Program\Program.csproj", "{9F0B699F-CA41-45F8-A86E-5127576DCADC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManager", "FileManager\FileManager.csproj", "{506355AE-C9FB-4507-837F-21DB515B6C7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{64EF7E44-7F14-4EEE-893A-5C7150EE7065}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64EF7E44-7F14-4EEE-893A-5C7150EE7065}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64EF7E44-7F14-4EEE-893A-5C7150EE7065}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F0B699F-CA41-45F8-A86E-5127576DCADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F0B699F-CA41-45F8-A86E-5127576DCADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F0B699F-CA41-45F8-A86E-5127576DCADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F0B699F-CA41-45F8-A86E-5127576DCADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{506355AE-C9FB-4507-837F-21DB515B6C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{506355AE-C9FB-4507-837F-21DB515B6C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{506355AE-C9FB-4507-837F-21DB515B6C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{506355AE-C9FB-4507-837F-21DB515B6C7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

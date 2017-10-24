@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace PuzzleSolver
 {
-    public interface IPuzzleSolver
+    public enum Direction
     {
-        PuzzleSolution Solve(Puzzle puzzle);
-    }
+        Up,
+        Down,
+        Left,
+        Right
+    }    
 }
