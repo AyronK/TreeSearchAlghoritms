@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BreadthFirstSearch.cs" />
     <Compile Include="DirectionEnum.cs" />
     <Compile Include="IPuzzleSolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
