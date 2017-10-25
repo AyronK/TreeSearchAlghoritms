@@ -6,73 +6,77 @@ namespace PuzzleSolver
 {
     public class Puzzle
     {
-        private List<byte> Elements { get; set; } = new List<byte>();
-        private Tuple<byte, byte> Blank { get; set; }
+        public readonly static byte Blank = 0;
 
-        public int RowsCount { get; private set; }
-        public int ColumnsCount { get; private set; }
-
+        #region Constructors
         public Puzzle(byte[,] elements)
         {
             RowsCount = elements.GetLength(0);
             ColumnsCount = elements.GetLength(1);
+            Elements.AddRange(Enumerable.Repeat(Byte.MaxValue, elements.Length));
+            FillPuzzle(elements);
+        }
 
-            for (int i = 0; i < RowsCount; i++)
+        private void FillPuzzle(byte[,] elements)
+        {
+            for (int row = 0; row < RowsCount; row++)
             {
-                for (int j = 0; j < ColumnsCount; j++)
+                for (int column = 0; column < ColumnsCount; column++)
                 {
-                    Elements.Add(elements[i, j]);
+                    SetValue(row, column, elements[row, column]);
                 }
             }
-
-            IndexOfBlank = IndexOf(0);
         }
+        #endregion
+
+        private List<byte> Elements { get; set; } = new List<byte>();
+
+        public int RowsCount { get; private set; }
+        public int ColumnsCount { get; private set; }
+        public int RowOfBlank { get; private set; }
+        public int ColumnOfBlank { get; private set; }
+
+        public byte this[int row, int column] => GetValue(row, column);
 
         public byte GetValue(int row, int column)
         {
             if (row > RowsCount || column > ColumnsCount)
                 throw new IndexOutOfRangeException();
-            int position = ConvertPosition(row, column);
-            return Elements[position];
+            int index = ConvertPositionToIndex(row, column);
+            return Elements[index];
         }
 
         private void SetValue(int row, int column, byte value)
         {
             if (row > RowsCount || column > ColumnsCount)
                 throw new IndexOutOfRangeException();
-            int position = ConvertPosition(row, column);
-            Elements[position] = value;
-            if (value == 0)
+            int index = ConvertPositionToIndex(row, column);
+            Elements[index] = value;
+            if (value == Blank)
             {
-                IndexOfBlank = new Tuple<int, int>(row, column);
+                RowOfBlank = RowOf(Blank);
+                ColumnOfBlank = ColumnOf(Blank);
             }
         }
 
-        private int ConvertPosition(int row, int column)
+        private int ConvertPositionToIndex(int row, int column)
         {
             return row * ColumnsCount + column;
         }
 
-        public Tuple<int, int> IndexOf(byte element)
-        {
-            return new Tuple<int, int>(RowOf(element), ColumnOf(element));
-        }
-
-        private int RowOf(byte element)
+        public int RowOf(byte element)
         {
             if (!Elements.Contains(element))
                 throw new ArgumentException("That element is not in puzzle");
             return Elements.IndexOf(element) / ColumnsCount;
         }
 
-        private int ColumnOf(byte element)
+        public int ColumnOf(byte element)
         {
             if (!Elements.Contains(element))
                 throw new ArgumentException("That element is not in puzzle");
             return Elements.IndexOf(element) % ColumnsCount;
         }
-
-        public byte this[int row, int column] => GetValue(row, column);
 
         public void MoveBlank(Direction direction)
         {
@@ -81,7 +85,7 @@ namespace PuzzleSolver
                 throw new InvalidOperationException("Cannot move in that direction");
             }
 
-            int swappedRow = IndexOfBlank.Item1, swappedColumn = IndexOfBlank.Item2;
+            int swappedRow = RowOfBlank, swappedColumn = ColumnOfBlank;
 
             switch (direction)
             {
@@ -99,27 +103,27 @@ namespace PuzzleSolver
                     break;
             }
 
-            SetValue(IndexOfBlank.Item1, IndexOfBlank.Item2, this[swappedRow, swappedColumn]);
-            SetValue(swappedRow, swappedColumn, 0);
+            SetValue(RowOfBlank, ColumnOfBlank, this[swappedRow, swappedColumn]);
+            SetValue(swappedRow, swappedColumn, Blank);
         }
 
         public IEnumerable<Direction> GetPossibleMoves()
         {
             List<Direction> possibleMoves = new List<Direction>();
 
-            if (IndexOfBlank.Item1 != 0)
+            if (RowOfBlank != 0)
             {
                 possibleMoves.Add(Direction.Up);
             }
-            if (IndexOfBlank.Item1 != RowsCount - 1)
+            if (RowOfBlank != RowsCount - 1)
             {
                 possibleMoves.Add(Direction.Down);
             }
-            if (IndexOfBlank.Item2 != 0)
+            if (ColumnOfBlank != 0)
             {
                 possibleMoves.Add(Direction.Left);
             }
-            if (IndexOfBlank.Item1 != ColumnsCount - 1)
+            if (RowOfBlank != ColumnsCount - 1)
             {
                 possibleMoves.Add(Direction.Right);
             }
@@ -127,16 +131,14 @@ namespace PuzzleSolver
             return possibleMoves;
         }
 
-        public Tuple<int, int> IndexOfBlank { get; private set; }
-
         public byte[,] ToMatrix()
         {
             byte[,] result = new byte[RowsCount, ColumnsCount];
-            for (int i = 0; i < RowsCount; i++)
+            for (int row = 0; row < RowsCount; row++)
             {
-                for (int j = 0; j < ColumnsCount; j++)
+                for (int column = 0; column < ColumnsCount; column++)
                 {
-                    result[i, j] = GetValue(i, j);
+                    result[row, column] = GetValue(row, column);
                 }
             }
             return result;

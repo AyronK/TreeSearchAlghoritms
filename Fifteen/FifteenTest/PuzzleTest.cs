@@ -85,10 +85,10 @@ namespace FifteenTest
             };
             Puzzle newPuzzle = new Puzzle(testTab);
 
-            var oldBlankPosition = newPuzzle.IndexOfBlank;
+            var oldBlankColumn = newPuzzle.ColumnOfBlank;
             newPuzzle.MoveBlank(Direction.Right);
 
-            Assert.AreEqual(oldBlankPosition.Item2 + 1, newPuzzle.IndexOfBlank.Item2);
+            Assert.AreEqual(oldBlankColumn + 1, newPuzzle.ColumnOfBlank);
         }
 
         [TestMethod]
@@ -100,9 +100,7 @@ namespace FifteenTest
                     { 1, 0, 2 },
                     { 3, 4, 5 }
             };
-            Puzzle newPuzzle = new Puzzle(testTab);
-
-            var oldBlankPosition = newPuzzle.IndexOfBlank;
+            Puzzle newPuzzle = new Puzzle(testTab);            
             newPuzzle.MoveBlank(Direction.Up);
         }
     }

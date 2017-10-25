@@ -10,7 +10,7 @@ namespace PuzzleSolver
     {
         public BreadthFirstSearch()
         {
-            SearchOrder = new Direction[] { Direction.Left, Direction.Up, Direction.Right, Direction.Down };
+            searchOrder = new Direction[] { Direction.Left, Direction.Up, Direction.Right, Direction.Down };
         }
 
         public BreadthFirstSearch(Direction[] searchOrder)
@@ -18,7 +18,8 @@ namespace PuzzleSolver
             SearchOrder = searchOrder;
         }
 
-        public Direction[] SearchOrder {
+        public Direction[] SearchOrder
+        {
             get
             {
                 return searchOrder;
@@ -27,7 +28,7 @@ namespace PuzzleSolver
             {
                 if (value.Length == Enum.GetValues(typeof(Direction)).Length)
                 {
-                    value = searchOrder;
+                    searchOrder = value;
                 }
                 else
                 {
@@ -36,7 +37,7 @@ namespace PuzzleSolver
             }
         }
 
-        private Direction[] searchOrder;
+        private Direction[] searchOrder = null;
 
         public PuzzleSolution Solve(Puzzle puzzle)
         {
