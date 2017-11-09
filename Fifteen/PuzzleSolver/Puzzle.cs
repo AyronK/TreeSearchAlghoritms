@@ -123,7 +123,7 @@ namespace PuzzleSolver
             {
                 possibleMoves.Add(Direction.Left);
             }
-            if (RowOfBlank != ColumnsCount - 1)
+            if (ColumnOfBlank != ColumnsCount - 1)
             {
                 possibleMoves.Add(Direction.Right);
             }
@@ -142,6 +142,22 @@ namespace PuzzleSolver
                 }
             }
             return result;
+        }
+
+        public bool Equals(Puzzle puzzle)
+        {
+            for (int row = 0; row < RowsCount; row++)
+            {
+                for (int column = 0; column < ColumnsCount; column++)
+                {
+                    if (this[row, column] != puzzle[row, column])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }

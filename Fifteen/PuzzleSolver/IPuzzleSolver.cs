@@ -8,6 +8,6 @@ namespace PuzzleSolver
 {
     public interface IPuzzleSolver
     {
-        PuzzleSolution Solve(Puzzle puzzle);
+        PuzzleSolution Solve(Puzzle unsolved, Puzzle target);
     }
 }

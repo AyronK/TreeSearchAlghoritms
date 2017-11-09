@@ -39,9 +39,48 @@ namespace PuzzleSolver
 
         private Direction[] searchOrder = null;
 
-        public PuzzleSolution Solve(Puzzle puzzle)
+        private PuzzleSolution solution = null;
+
+        public PuzzleSolution Solve(Puzzle unsolved, Puzzle target)
         {
-            throw new NotImplementedException();
+            solution = new PuzzleSolution();
+            DateTime startTime = DateTime.Now;
+
+            Proceed(unsolved, target);
+
+            solution.Duration = DateTime.Now - startTime;
+            return solution;
+        }
+
+        private void Proceed(Puzzle puzzle, Puzzle target)
+        {
+            Queue<Puzzle> queue = new Queue<Puzzle>();
+            queue.Enqueue(puzzle);
+
+            while (queue.Count != 0)
+            {
+                solution.MaxRecursionDepth++;
+                var currentState = queue.Dequeue();
+                solution.Visited.Add(currentState);
+                
+                var possibleMoves = currentState.GetPossibleMoves();
+                for (int moveId = 0; moveId < searchOrder.Length; moveId++)
+                {                    
+                    if (possibleMoves.Contains(searchOrder[moveId]))
+                    {
+                        var newState = new Puzzle(currentState.ToMatrix());
+                        newState.MoveBlank(searchOrder[moveId]);
+                        solution.Solution.Add(searchOrder[moveId]);
+                        if (newState.Equals(target))
+                        {
+                            solution.LastState = newState;
+                            return;
+                        }
+                        queue.Enqueue(newState);
+                    }
+                }
+                solution.Processed.Add(currentState);
+            }
         }
     }
 }

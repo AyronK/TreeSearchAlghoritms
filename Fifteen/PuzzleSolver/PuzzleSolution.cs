@@ -8,13 +8,15 @@ namespace PuzzleSolver
 {
     public class PuzzleSolution
     {
-        public Direction[] Solution { get; private set; }
-        public int SeenCount => Seen.Count;
+        public List<Direction> Solution { get; private set; } = new List<Direction>();
+        public int VisitedCount => Visited.Count;
         public int ProcessedCount => Processed.Count;
-        public int MaxRecursionDepth { get; private set; }
-        public DateTime Duration { get; private set; }
+        public int MaxRecursionDepth { get; internal set; }
+        public TimeSpan Duration { get; internal set; } = TimeSpan.Zero;
 
-        private List<Puzzle> Seen { get; set; }
-        private List<Puzzle> Processed { get; set; }
+        public List<Puzzle> Visited { get; set; } = new List<Puzzle>();
+        public List<Puzzle> Processed { get; set; } = new List<Puzzle>();
+
+        public Puzzle LastState { get; set; }
     }
 }
