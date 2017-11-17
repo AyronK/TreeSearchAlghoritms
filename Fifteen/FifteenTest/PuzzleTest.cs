@@ -171,5 +171,32 @@ namespace FifteenTest
 
             Assert.IsTrue(solution.LastState.Equals(target));
         }
+
+        [TestMethod]
+        public void AStarHammingTest()
+        {
+            byte[,] testTab =
+                {
+                    { 1, 2, 3, 4 },
+                    { 6, 10 , 7, 8},
+                    { 5, 0, 11, 12 },
+                    { 9, 13, 14, 15 }
+            };
+            byte[,] targetTab =
+                {
+                    { 1, 2, 3, 4 },
+                    { 5, 6 , 7, 8},
+                    { 9, 10, 11, 12 },
+                    { 13, 14, 15, 0 }
+            };
+            Puzzle newPuzzle = new Puzzle(testTab);
+            Puzzle target = new Puzzle(targetTab);
+
+            AStarHamming astar = new AStarHamming();
+
+            var solution = astar.Solve(newPuzzle, target);
+
+            Assert.IsTrue(solution.LastState.Equals(target));
+        }
     }
 }

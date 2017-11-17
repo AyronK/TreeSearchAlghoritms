@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PuzzleSolver
 {
-    public class AStarManattan : IPuzzleSolver
+    public class AStarHamming : IPuzzleSolver
     {
-        public AStarManattan()
+        public AStarHamming()
         {
             searchOrder = new Direction[] { Direction.Left, Direction.Up, Direction.Right, Direction.Down };
         }
@@ -18,8 +18,8 @@ namespace PuzzleSolver
         private PuzzleSolution solution = null;
 
         private int moves = 0;
-        private int[] tilesToCorrectOrder = null;
-        private int[] manhattanHeuristic = null;
+        private int[] tilesinWrongPlaces = new int[4];
+        private int[] hammingHeuristic = new int[4];
 
 
         public PuzzleSolution Solve(Puzzle unsolved, Puzzle target)
@@ -46,10 +46,10 @@ namespace PuzzleSolver
                 solution.Visited.Add(currentState);
 
                 var possibleMoves = currentState.GetPossibleMoves();
+                Puzzle[] possibleNewStates = new Puzzle[4];
+
                 for (int moveId = 0; moveId < searchOrder.Length; moveId++)
                 {
-                    Puzzle[] possibleNewStates = null;
-
                     if (possibleMoves.Contains(searchOrder[moveId]))
                     {
                         var newState = new Puzzle(currentState.ToMatrix());
@@ -61,22 +61,45 @@ namespace PuzzleSolver
                             solution.LastState = newState;
                             return;
                         }
-                        
-                        possibleNewStates[moveId] = newState;
-                        tilesToCorrectOrder[moveId] = CountTilesToCorrectOrder(newState, target);
-                        manhattanHeuristic[moveId] = tilesToCorrectOrder[moveId] + moves;
-                    }
 
-                    // min z manhattanHeuristic i z tej pozycji 
-                    queue.Enqueue(possibleNewStates[0]); //
+                        possibleNewStates[moveId] = newState;
+                        tilesinWrongPlaces[moveId] = CountTilesInWrongPlaces(newState, target);
+                        hammingHeuristic[moveId] = tilesinWrongPlaces[moveId] + moves;
+                    }
                 }
+                queue.Enqueue(possibleNewStates[FindNextStatesIndex()]);
+
                 solution.Processed.Add(currentState);
             }
         }
 
-        private int CountTilesToCorrectOrder(Puzzle puzzle, Puzzle target)
+        private int CountTilesInWrongPlaces(Puzzle puzzle, Puzzle target)
         {
-            return 0;
+            int numberOfTiles = 0;
+            for(int i = 0; i<puzzle.RowsCount; i++)
+            {
+                for(int j = 0; j<puzzle.ColumnsCount; j++)
+                {
+                    if(puzzle.GetValue(i,j) != target.GetValue(i,j))
+                    {
+                        numberOfTiles++;
+                    }
+                }
+            }
+            return numberOfTiles;
+        }
+
+        private int FindNextStatesIndex()
+        {
+            int min = 0;
+            for (int index = 0; index < searchOrder.Length; index++)
+            {
+                if (tilesinWrongPlaces[index] < tilesinWrongPlaces[min])
+                {
+                    min = index;
+                }
+            }
+            return min;
         }
     }
 }
