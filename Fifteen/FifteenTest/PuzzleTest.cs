@@ -212,7 +212,8 @@ namespace FifteenTest
             Puzzle newPuzzle = new Puzzle(testTab);
             Puzzle target = new Puzzle(targetTab);
 
-            AStarHamming astar = new AStarHamming();
+            AStar astar = new AStar();
+            astar.heuristicType = "hamm";
 
             var solution = astar.Solve(newPuzzle, target);
 
@@ -239,7 +240,8 @@ namespace FifteenTest
             };
             Puzzle newPuzzle = new Puzzle(testTab);
             Puzzle target = new Puzzle(targetTab);
-            AStarManattan astar = new AStarManattan();
+            AStar astar = new AStar();
+            astar.heuristicType = "manh";
 
             var solution = astar.Solve(newPuzzle, target);
 

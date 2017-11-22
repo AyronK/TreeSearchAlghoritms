@@ -6,22 +6,23 @@ using System.Threading.Tasks;
 
 namespace PuzzleSolver
 {
-    public class AStarManattan : IPuzzleSolver
+    public class AStar : IPuzzleSolver
     {
-        public AStarManattan()
+        public AStar()
         {
             searchOrder = new Direction[] { Direction.Left, Direction.Up, Direction.Right, Direction.Down };
         }
 
+        public string heuristicType = null;
+
         private Direction[] searchOrder = null;
 
         private PuzzleSolution solution = null;
-
         private int moves = 0;
+        private int[] tilesinWrongPlaces = new int[4];
         private int[] tilesToCorrectOrder = new int[4];
-        private int[] manhattanHeuristic = new int[4];
+        private int[] heuristic = new int[4];
         private int numberOfPossibleMoves = 0;
-
 
         public PuzzleSolution Solve(Puzzle unsolved, Puzzle target)
         {
@@ -66,13 +67,19 @@ namespace PuzzleSolver
                             solution.LastState = newState;
                             return;
                         }
-                        
+
                         possibleNewStates[moveId] = newState;
-
                         solution.Visited.Add(newState);
-
-                        tilesToCorrectOrder[moveId] = CountTilesToCorrectOrder(newState, target);
-                        manhattanHeuristic[moveId] = tilesToCorrectOrder[moveId] + moves;
+                        if (heuristicType == "hamm")
+                        {
+                            tilesinWrongPlaces[moveId] = CountTilesInWrongPlaces(newState, target);
+                            heuristic[moveId] = tilesinWrongPlaces[moveId] + moves;
+                        }
+                        else if(heuristicType == "manh")
+                        {
+                            tilesToCorrectOrder[moveId] = CountTilesToCorrectOrder(newState, target);
+                            heuristic[moveId] = tilesToCorrectOrder[moveId] + moves;
+                        }
                     }
                 }
                 queue.Enqueue(possibleNewStates[FindNextStatesIndex()]);
@@ -80,6 +87,23 @@ namespace PuzzleSolver
                 solution.Processed.Add(currentState);
             }
         }
+
+        private int CountTilesInWrongPlaces(Puzzle puzzle, Puzzle target)
+        {
+            int numberOfTiles = 0;
+            for(int i = 0; i<puzzle.RowsCount; i++)
+            {
+                for(int j = 0; j<puzzle.ColumnsCount; j++)
+                {
+                    if(puzzle.GetValue(i,j) != target.GetValue(i,j))
+                    {
+                        numberOfTiles++;
+                    }
+                }
+            }
+            return numberOfTiles;
+        }
+
 
         private int CountTilesToCorrectOrder(Puzzle puzzle, Puzzle target)
         {
@@ -104,7 +128,7 @@ namespace PuzzleSolver
             int min = 0;
             for (int index = 0; index < numberOfPossibleMoves; index++)
             {
-                if (manhattanHeuristic[index] < manhattanHeuristic[min])
+                if (heuristic[index] < heuristic[min])
                 {
                     min = index;
                 }
