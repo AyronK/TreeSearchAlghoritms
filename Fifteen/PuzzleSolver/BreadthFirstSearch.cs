@@ -18,6 +18,28 @@ namespace PuzzleSolver
             SearchOrder = searchOrder;
         }
 
+        public BreadthFirstSearch(string searchOrder)
+        {
+            for( int i = 0; i < 4; i++ )
+            {
+                switch(searchOrder[i].ToString())
+                {
+                    case "L":
+                        SearchOrder[i] = Direction.Left;
+                        break;
+                    case "R":
+                        SearchOrder[i] = Direction.Right;
+                        break;
+                    case "U":
+                        SearchOrder[i] = Direction. Up;
+                        break;
+                    case "D":
+                        SearchOrder[i] = Direction.Down;
+                        break;
+                }
+            }
+        }
+
         public Direction[] SearchOrder
         {
             get

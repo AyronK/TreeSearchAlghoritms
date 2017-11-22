@@ -8,19 +8,12 @@ namespace Program
         static void Main(string[] args)
         {
             IPuzzleSolver solver = null;
-            //byte[,] puzzleData = FileReader.ReadPuzzleData("");
-            //Puzzle puzzle = new Puzzle(puzzleData);
-            //Puzzle target = new Puzzle(new byte[,]{ { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 8, 10, 11, 12 }, { 13, 14, 15, 0 } });
-            //PuzzleSolution solution = solver.Solve(puzzle, target);
-
-            ////FileWriter.WriteSolution(solution.Solution, "");
-            //FileWriter.WriteSolutionDetails(solution, "");
 
             string strategy = null;
             string details = null;
-            string enteringPuzzle = null;
-            string solutionPuzzle = null;
-            string additionalInformation = null;
+            string enteringPuzzleFile = null;
+            string solutionPuzzleFile = null;
+            string additionalInformationFile = null;
 
             if (args.Length == 0)
             {
@@ -34,12 +27,31 @@ namespace Program
             {
                 strategy = args[0];
                 details = args[1];
-                enteringPuzzle = args[2];
-                solutionPuzzle = args[3];
-                additionalInformation = args[5];
+                enteringPuzzleFile = args[2];
+                solutionPuzzleFile = args[3];
+                additionalInformationFile = args[5];
 
-           
-                
+                switch(strategy)
+                {
+                    case "bfs":
+                        solver = new BreadthFirstSearch(details);
+                        break;
+                    //case "dfs":
+                    //    solver = new DepthFirstSearch();
+                    //    break;
+                    case "astr":
+                        solver = new AStar();
+                        ((AStar)solver).heuristicType = details;
+                        break;
+                }
+
+                byte[,] puzzleData = FileReader.ReadPuzzleData(enteringPuzzleFile);
+                Puzzle puzzle = new Puzzle(puzzleData);
+                Puzzle target = new Puzzle(new byte[,]{ { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 8, 10, 11, 12 }, { 13, 14, 15, 0 } });
+                PuzzleSolution solution = solver.Solve(puzzle, target);
+                FileWriter.WriteSolution(solution.Solution, solutionPuzzleFile);
+                FileWriter.WriteSolutionDetails(solution, additionalInformationFile);
+                               
             }
         }
     }

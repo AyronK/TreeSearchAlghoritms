@@ -9,7 +9,7 @@ namespace FileManager
 {
     public static class FileWriter
     {
-        public static void WriteSolution(Direction[] solution, string path)
+        public static void WriteSolution(List<Direction> solution, string path)
         {
             throw new NotImplementedException();
         }
