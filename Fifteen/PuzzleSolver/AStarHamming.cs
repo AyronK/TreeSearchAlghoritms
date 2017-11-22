@@ -20,6 +20,7 @@ namespace PuzzleSolver
         private int moves = 0;
         private int[] tilesinWrongPlaces = new int[4];
         private int[] hammingHeuristic = new int[4];
+        private int numberOfPossibleMoves = 0;
 
 
         public PuzzleSolution Solve(Puzzle unsolved, Puzzle target)
@@ -46,6 +47,7 @@ namespace PuzzleSolver
                 solution.Visited.Add(currentState);
 
                 var possibleMoves = currentState.GetPossibleMoves();
+                numberOfPossibleMoves = possibleMoves.Count();
                 Puzzle[] possibleNewStates = new Puzzle[4];
 
                 for (int moveId = 0; moveId < searchOrder.Length; moveId++)
@@ -92,9 +94,9 @@ namespace PuzzleSolver
         private int FindNextStatesIndex()
         {
             int min = 0;
-            for (int index = 0; index < searchOrder.Length; index++)
+            for (int index = 0; index < numberOfPossibleMoves; index++)
             {
-                if (tilesinWrongPlaces[index] < tilesinWrongPlaces[min])
+                if (hammingHeuristic[index] < hammingHeuristic[min])
                 {
                     min = index;
                 }

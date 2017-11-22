@@ -148,13 +148,22 @@ namespace FifteenTest
         [TestMethod]
         public void BFSTest()
         {
+            //byte[,] testTab =
+            //    {
+            //        { 1, 2, 3, 4 },
+            //        { 6, 10 , 7, 8},
+            //        { 5, 0, 11, 12 },
+            //        { 9, 13, 14, 15 }
+            //};
+
             byte[,] testTab =
                 {
-                    { 1, 2, 3, 4 },
-                    { 6, 10 , 7, 8},
-                    { 5, 0, 11, 12 },
-                    { 9, 13, 14, 15 }
+                    { 0, 1, 3, 4 },
+                    { 5, 2 , 7, 8},
+                    { 9, 6, 11, 12 },
+                    { 13, 10, 14, 15 }
             };
+
             byte[,] targetTab =
                 {
                     { 1, 2, 3, 4 },
@@ -175,12 +184,51 @@ namespace FifteenTest
         [TestMethod]
         public void AStarHammingTest()
         {
+            //byte[,] testTab =
+            //    {
+            //        { 1, 2, 3, 4 },
+            //        { 5, 7, 0, 8},
+            //        { 9, 6, 11, 12 },
+            //        { 13, 10, 14, 15 }
+            //};
+
+
             byte[,] testTab =
                 {
                     { 1, 2, 3, 4 },
-                    { 6, 10 , 7, 8},
-                    { 5, 0, 11, 12 },
-                    { 9, 13, 14, 15 }
+                    { 5, 0, 7, 8},
+                    { 9, 6, 11, 12 },
+                    { 13, 10, 14, 15 }
+            };
+
+
+            byte[,] targetTab =
+            {
+                    { 1, 2, 3, 4 },
+                    { 5, 6 , 7, 8},
+                    { 9, 10, 11, 12 },
+                    { 13, 14, 15, 0 }
+            };
+            Puzzle newPuzzle = new Puzzle(testTab);
+            Puzzle target = new Puzzle(targetTab);
+
+            AStarHamming astar = new AStarHamming();
+
+            var solution = astar.Solve(newPuzzle, target);
+
+            Assert.IsTrue(solution.LastState.Equals(target));
+        }
+
+
+        [TestMethod]
+        public void AStarManhattanTest()
+        {
+            byte[,] testTab =
+                {
+                    { 1, 2, 3, 4 },
+                    { 5, 0, 6, 8},
+                    { 9, 11, 7, 12 },
+                    { 13, 10, 14, 15 }
             };
             byte[,] targetTab =
                 {
@@ -191,8 +239,7 @@ namespace FifteenTest
             };
             Puzzle newPuzzle = new Puzzle(testTab);
             Puzzle target = new Puzzle(targetTab);
-
-            AStarHamming astar = new AStarHamming();
+            AStarManattan astar = new AStarManattan();
 
             var solution = astar.Solve(newPuzzle, target);
 
