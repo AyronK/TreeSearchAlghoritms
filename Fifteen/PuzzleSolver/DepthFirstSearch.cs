@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace PuzzleSolver
 {
-    public class BreadthFirstSearch : IPuzzleSolver
+    public class DepthFirstSearch : IPuzzleSolver
     {
-        public BreadthFirstSearch()
+        public DepthFirstSearch()
         {
             searchOrder = new Direction[] { Direction.Left, Direction.Up, Direction.Right, Direction.Down };
         }
 
-        public BreadthFirstSearch(Direction[] searchOrder)
+        public DepthFirstSearch(Direction[] searchOrder)
         {
             SearchOrder = searchOrder;
         }
 
-        public BreadthFirstSearch(string searchOrder)
+        public DepthFirstSearch(string searchOrder)
         {
             for( int i = 0; i < 4; i++ )
             {
@@ -39,6 +39,8 @@ namespace PuzzleSolver
                 }
             }
         }
+
+        public int MaxRecursionDepth = 20;
 
         public Direction[] SearchOrder
         {
@@ -79,31 +81,34 @@ namespace PuzzleSolver
             Queue<Puzzle> queue = new Queue<Puzzle>();
             queue.Enqueue(puzzle);
 
-            while (queue.Count != 0)
-            {
-                solution.RecursionDepth++;
-                var currentState = queue.Dequeue();
-                solution.Visited.Add(currentState);
-                
-                var possibleMoves = currentState.GetPossibleMoves();
-                for (int moveId = 0; moveId < searchOrder.Length; moveId++)
-                {                    
-                    if (possibleMoves.Contains(searchOrder[moveId]))
-                    {
-                        var newState = new Puzzle(currentState.ToMatrix());
-                        newState.MoveBlank(searchOrder[moveId]);
-                        solution.Solution.Add(searchOrder[moveId]);
-                        if (newState.Equals(target))
-                        {
-                            solution.LastState = newState;
-                            solution.wasSolved = true;
-                            return;
-                        }
-                        queue.Enqueue(newState);
-                    }
-                }
-                solution.Processed.Add(currentState);
-            }
+            //while (queue.Count != 0)
+            //{
+            //    solution.RecursionDepth++;
+            //    var currentState = queue.Dequeue();
+            //    solution.Visited.Add(currentState);
+
+            //    var possibleMoves = currentState.GetPossibleMoves();
+            //    for (int moveId = 0; moveId < searchOrder.Length; moveId++)
+            //    {
+            //        if (possibleMoves.Contains(searchOrder[moveId]))
+            //        {
+            //            var newState = new Puzzle(currentState.ToMatrix());
+            //            newState.MoveBlank(searchOrder[moveId]);
+            //            solution.Solution.Add(searchOrder[moveId]);
+            //            if (newState.Equals(target))
+            //            {
+            //                solution.LastState = newState;
+            //                return;
+            //            }
+            //            queue.Enqueue(newState);
+            //        }
+            //    }
+            //    solution.Processed.Add(currentState);
+            //    if (solution.RecursionDepth == MaxRecursionDepth)
+            //    {
+            //        //wyjscie z obecnej galezi
+            //    }
+            //}
         }
     }
 }

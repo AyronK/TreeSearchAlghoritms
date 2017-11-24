@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PuzzleSolver;
 using System.Linq;
+using FileManager;
 
 namespace FifteenTest
 {
@@ -179,6 +180,7 @@ namespace FifteenTest
             var solution = bfs.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
+            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionBFS.txt");
         }
 
         [TestMethod]
@@ -218,6 +220,7 @@ namespace FifteenTest
             var solution = astar.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
+            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionHAMN.txt");
         }
 
 
@@ -246,6 +249,9 @@ namespace FifteenTest
             var solution = astar.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
+            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionMANH.txt");
+            FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsMANH.txt");
+
         }
     }
 }

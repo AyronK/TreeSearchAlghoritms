@@ -18,7 +18,6 @@ namespace PuzzleSolver
         private Direction[] searchOrder = null;
 
         private PuzzleSolution solution = null;
-        private int moves = 0;
         private int[] tilesinWrongPlaces = new int[4];
         private int[] tilesToCorrectOrder = new int[4];
         private int[] heuristic = new int[4];
@@ -42,8 +41,8 @@ namespace PuzzleSolver
 
             while (queue.Count != 0)
             {
-                solution.MaxRecursionDepth++;
-                moves++;
+                solution.RecursionDepth++;
+                solution.MovesMade++;
                 var currentState = queue.Dequeue();
                 if (!solution.Visited.Contains(currentState))
                 {
@@ -61,10 +60,12 @@ namespace PuzzleSolver
                         var newState = new Puzzle(currentState.ToMatrix());
                         newState.MoveBlank(searchOrder[moveId]);
 
-                        solution.Solution.Add(searchOrder[moveId]);
+                        
                         if (newState.Equals(target))
                         {
                             solution.LastState = newState;
+                            solution.wasSolved = true;
+                            solution.Solution.Add(searchOrder[moveId]);
                             return;
                         }
 
@@ -73,16 +74,17 @@ namespace PuzzleSolver
                         if (heuristicType == "hamm")
                         {
                             tilesinWrongPlaces[moveId] = CountTilesInWrongPlaces(newState, target);
-                            heuristic[moveId] = tilesinWrongPlaces[moveId] + moves;
+                            heuristic[moveId] = tilesinWrongPlaces[moveId] + solution.MovesMade;
                         }
                         else if(heuristicType == "manh")
                         {
                             tilesToCorrectOrder[moveId] = CountTilesToCorrectOrder(newState, target);
-                            heuristic[moveId] = tilesToCorrectOrder[moveId] + moves;
+                            heuristic[moveId] = tilesToCorrectOrder[moveId] + solution.MovesMade;
                         }
                     }
                 }
                 queue.Enqueue(possibleNewStates[FindNextStatesIndex()]);
+                solution.Solution.Add(searchOrder[FindNextStatesIndex()]);
 
                 solution.Processed.Add(currentState);
             }
