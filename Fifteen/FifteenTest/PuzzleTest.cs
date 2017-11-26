@@ -184,23 +184,53 @@ namespace FifteenTest
         }
 
         [TestMethod]
-        public void AStarHammingTest()
+        public void DFSTest()
         {
             byte[,] testTab =
                 {
-                    { 1, 2, 3, 4, },
-                    { 5, 6, 7, 8, },
-                    { 9, 10, 15, 11, },
-                    { 13, 14, 12, 0, }
+                    { 1, 2, 3, 4 },
+                    { 5, 6 , 7, 8},
+                    { 9, 0, 11, 12 },
+                    { 13, 10, 14, 15 }
             };
 
+
+            byte[,] targetTab =
+                {
+                    { 1, 2, 3, 4 },
+                    { 5, 6 , 7, 8},
+                    { 9, 10, 11, 12 },
+                    { 13, 14, 15, 0 }
+            };
+            Puzzle newPuzzle = new Puzzle(testTab);
+            Puzzle target = new Puzzle(targetTab);
+
+            DepthFirstSearch dfs = new DepthFirstSearch(new Direction[] { Direction.Down, Direction.Right, Direction.Up, Direction.Left });
+
+            var solution = dfs.Solve(newPuzzle, target);
+
+            Assert.IsTrue(solution.LastState.Equals(target));
+            //    FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionBFS.txt");
+        }
+
+        [TestMethod]
+        public void AStarHammingTest()
+        {
             //byte[,] testTab =
             //    {
-            //        { 1, 2, 3, 4 },
-            //        { 5, 0, 7, 8},
-            //        { 9, 6, 11, 12 },
-            //        { 13, 10, 14, 15 }
+            //        { 1, 2, 3, 4, },
+            //        { 5, 6, 11, 7, },
+            //        { 9, 10, 8, 0, },
+            //        { 13, 14, 15, 12 }
             //};
+
+            byte[,] testTab =
+                {
+                    { 1, 2, 3, 4 },
+                    { 5, 0, 7, 8},
+                    { 9, 6, 11, 12 },
+                    { 13, 10, 14, 15 }
+            };
 
 
             byte[,] targetTab =

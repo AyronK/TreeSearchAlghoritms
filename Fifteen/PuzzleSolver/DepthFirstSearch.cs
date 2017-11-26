@@ -81,34 +81,82 @@ namespace PuzzleSolver
             Queue<Puzzle> queue = new Queue<Puzzle>();
             queue.Enqueue(puzzle);
 
-            //while (queue.Count != 0)
-            //{
-            //    solution.RecursionDepth++;
-            //    var currentState = queue.Dequeue();
-            //    solution.Visited.Add(currentState);
+            while (queue.Count != 0)
+            {
+                var currentState = queue.Dequeue();
+                //runDFS(currentState, target);
 
-            //    var possibleMoves = currentState.GetPossibleMoves();
-            //    for (int moveId = 0; moveId < searchOrder.Length; moveId++)
-            //    {
-            //        if (possibleMoves.Contains(searchOrder[moveId]))
-            //        {
-            //            var newState = new Puzzle(currentState.ToMatrix());
-            //            newState.MoveBlank(searchOrder[moveId]);
-            //            solution.Solution.Add(searchOrder[moveId]);
-            //            if (newState.Equals(target))
-            //            {
-            //                solution.LastState = newState;
-            //                return;
-            //            }
-            //            queue.Enqueue(newState);
-            //        }
-            //    }
-            //    solution.Processed.Add(currentState);
-            //    if (solution.RecursionDepth == MaxRecursionDepth)
-            //    {
-            //        //wyjscie z obecnej galezi
-            //    }
-            //}
+                solution.Visited.Add(currentState);
+                
+                var possibleMoves = currentState.GetPossibleMoves();
+
+                for (int moveId = 0; moveId < searchOrder.Length; moveId++)
+                {
+                    if (possibleMoves.Contains(searchOrder[moveId]))
+                    {
+                        var newState = new Puzzle(currentState.ToMatrix());
+                        newState.MoveBlank(searchOrder[moveId]);
+
+                        if (newState.Equals(target))
+                        {
+                            solution.LastState = newState;
+                            solution.IsSolved = true;
+                            solution.Solution.Add(searchOrder[moveId]);
+                            return;
+                        }
+
+                        solution.Solution.Add(searchOrder[moveId]);
+                        runDFS(newState, target);
+
+                        if(solution.IsSolved)
+                        {
+                            return;
+                        }
+                    }
+                }
+
+            solution.Processed.Add(currentState);
+            }
+        }
+
+        private void runDFS(Puzzle currentState, Puzzle target)
+        {
+            solution.Visited.Add(currentState);
+            solution.RecursionDepth++;
+
+            var possibleMoves = currentState.GetPossibleMoves();
+            for (int moveId = 0; moveId < searchOrder.Length; moveId++)
+            {
+                if (possibleMoves.Contains(searchOrder[moveId]))
+                {
+                    if (solution.RecursionDepth == MaxRecursionDepth)
+                    {
+                        solution.IsSolved = false;
+                        solution.RecursionDepth--;
+                        return;
+                    }
+
+                    var newState = new Puzzle(currentState.ToMatrix());
+                    newState.MoveBlank(searchOrder[moveId]);
+
+                    if (newState.Equals(target))
+                    {
+                        solution.LastState = newState;
+                        solution.IsSolved = true;
+                        solution.Solution.Add(searchOrder[moveId]);
+                        return;
+                    }
+
+                    if (solution.Visited.Find(el => el.Equals(newState)) == null)
+                    {
+                        solution.Solution.Add(searchOrder[moveId]);
+                        runDFS(newState, target);
+                    }
+
+                }
+            }
+            solution.Processed.Add(currentState);
+
         }
     }
 }

@@ -21,7 +21,6 @@ namespace PuzzleSolver
         private int[] tilesinWrongPlaces = new int[4];
         private int[] tilesToCorrectOrder = new int[4];
         private int[] heuristic = new int[4];
-        private int numberOfPossibleMoves = 0;
 
         public PuzzleSolution Solve(Puzzle unsolved, Puzzle target)
         {
@@ -46,13 +45,9 @@ namespace PuzzleSolver
                 heuristic = new int[4] { Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue };
 
                 var currentState = queue.Dequeue();
-                if (!solution.Visited.Contains(currentState))
-                {
-                    solution.Visited.Add(currentState);
-                }
+                solution.Visited.Add(currentState);
 
                 var possibleMoves = currentState.GetPossibleMoves();
-                //numberOfPossibleMoves = possibleMoves.Count();
                 Puzzle[] possibleNewStates = new Puzzle[4];
 
                 for (int moveId = 0; moveId < searchOrder.Length; moveId++)
@@ -72,16 +67,20 @@ namespace PuzzleSolver
                         }
 
                         possibleNewStates[moveId] = newState;
-                        solution.Visited.Add(newState);
-                        if (heuristicType == "hamm")
+
+                        if(solution.Visited.Find(el => el.Equals(newState)) == null)
                         {
-                            tilesinWrongPlaces[moveId] = CountTilesInWrongPlaces(newState, target);
-                            heuristic[moveId] = tilesinWrongPlaces[moveId] + solution.MovesMade;
-                        }
-                        else if (heuristicType == "manh")
-                        {
-                            tilesToCorrectOrder[moveId] = CountTilesToCorrectOrder(newState, target);
-                            heuristic[moveId] = tilesToCorrectOrder[moveId] + solution.MovesMade;
+                            solution.Visited.Add(newState);
+                            if (heuristicType == "hamm")
+                            {
+                                tilesinWrongPlaces[moveId] = CountTilesInWrongPlaces(newState, target);
+                                heuristic[moveId] = tilesinWrongPlaces[moveId] + solution.MovesMade;
+                            }
+                            else if (heuristicType == "manh")
+                            {
+                                tilesToCorrectOrder[moveId] = CountTilesToCorrectOrder(newState, target);
+                                heuristic[moveId] = tilesToCorrectOrder[moveId] + solution.MovesMade;
+                            }
                         }
                     }
                 }
