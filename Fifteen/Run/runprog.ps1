@@ -23,7 +23,7 @@
 
 param([string]$strategy, [string]$param)
 
-$Progcmd = 'C:\Users\Ayron\Desktop\Studia\SISE\Fifteen\Program\bin\Release\program.exe'
+$Progcmd = '.\Program.exe'
 $Orders = @('RDUL', 'RDLU', 'DRUL', 'DRLU', 'LUDR',  'LURD', 'ULDR', 'ULRD')
 $Heuristics = @('hamm', 'manh')
 $InitFilenameRegex = '^[a-zA-Z0-9]+_[0-9]+_[0-9]+.txt$'
@@ -77,9 +77,9 @@ function RunAstr([string]$heuristic) {
 }
 
 function RunAll() {
+    RunAstr
     RunBfs
     RunDfs
-    RunAstr
 }
 
 # Parse arguments
