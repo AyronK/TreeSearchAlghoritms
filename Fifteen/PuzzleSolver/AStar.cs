@@ -38,6 +38,7 @@ namespace PuzzleSolver
         {
             Queue<Puzzle> queue = new Queue<Puzzle>();
             queue.Enqueue(puzzle);
+            heuristic = new int[4] { Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue };
 
             while (queue.Count != 0)
             {
@@ -60,7 +61,7 @@ namespace PuzzleSolver
                         var newState = new Puzzle(currentState.ToMatrix());
                         newState.MoveBlank(searchOrder[moveId]);
 
-                        
+
                         if (newState.Equals(target))
                         {
                             solution.LastState = newState;
@@ -76,7 +77,7 @@ namespace PuzzleSolver
                             tilesinWrongPlaces[moveId] = CountTilesInWrongPlaces(newState, target);
                             heuristic[moveId] = tilesinWrongPlaces[moveId] + solution.MovesMade;
                         }
-                        else if(heuristicType == "manh")
+                        else if (heuristicType == "manh")
                         {
                             tilesToCorrectOrder[moveId] = CountTilesToCorrectOrder(newState, target);
                             heuristic[moveId] = tilesToCorrectOrder[moveId] + solution.MovesMade;
@@ -93,11 +94,11 @@ namespace PuzzleSolver
         private int CountTilesInWrongPlaces(Puzzle puzzle, Puzzle target)
         {
             int numberOfTiles = 0;
-            for(int i = 0; i<puzzle.RowsCount; i++)
+            for (int i = 0; i < puzzle.RowsCount; i++)
             {
-                for(int j = 0; j<puzzle.ColumnsCount; j++)
+                for (int j = 0; j < puzzle.ColumnsCount; j++)
                 {
-                    if(puzzle.GetValue(i,j) != target.GetValue(i,j))
+                    if (puzzle.GetValue(i, j) != target.GetValue(i, j))
                     {
                         numberOfTiles++;
                     }
@@ -128,9 +129,13 @@ namespace PuzzleSolver
         private int FindNextStatesIndex()
         {
             int min = 0;
+            while (heuristic[min] == 0)
+            {
+                min++;
+            }
             for (int index = 0; index < 4; index++)
             {
-                if (heuristic[index] < heuristic[min] && heuristic[index]!= 0)
+                if (heuristic[index] < heuristic[min] && heuristic[index] != 0)
                 {
                     min = index;
                 }
