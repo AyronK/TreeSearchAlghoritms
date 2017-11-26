@@ -19,19 +19,20 @@ namespace FileManager
                 using (StreamReader reader = new StreamReader(path))
                 {
                     var s = reader.ReadToEnd();
-                    puzzleData = s.Replace(" ", "").Replace("\n", "").Replace("\r", "").Replace("\t", "");
-                        //Console.WriteLine(puzzleData);
+                    puzzleData = s.Replace(" ", ",").Replace("\n", "").Replace("\r", ",").Replace("\t", ",");
                 }
 
-                int rowsNumber = int.Parse(puzzleData[0].ToString());
-                int columnsNumber = int.Parse(puzzleData[1].ToString());
+                var x = puzzleData.Split(',');
+
+                int rowsNumber = int.Parse(x[0].ToString());
+                int columnsNumber = int.Parse(x[1].ToString());
                 byte[,] puzzle = new byte[rowsNumber, columnsNumber];
 
                 for(int i = 0; i < rowsNumber; i++)
                 {
                     for (int j = 0; j < columnsNumber; j++)
                     {
-                        puzzle[i,j] = byte.Parse(puzzleData[i * columnsNumber + j + 2].ToString());
+                        puzzle[i,j] = byte.Parse(x[i * columnsNumber + j + 2].ToString());
                     }
                 }
 

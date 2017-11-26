@@ -29,7 +29,7 @@ namespace Program
                 details = args[1];
                 enteringPuzzleFile = args[2];
                 solutionPuzzleFile = args[3];
-                additionalInformationFile = args[5];
+                additionalInformationFile = args[4];
 
                 switch(strategy)
                 {
@@ -47,9 +47,9 @@ namespace Program
 
                 byte[,] puzzleData = FileReader.ReadPuzzleData(enteringPuzzleFile);
                 Puzzle puzzle = new Puzzle(puzzleData);
-                Puzzle target = new Puzzle(new byte[,]{ { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 8, 10, 11, 12 }, { 13, 14, 15, 0 } });
+                Puzzle target = new Puzzle(new byte[,]{ { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 0 } });
                 PuzzleSolution solution = solver.Solve(puzzle, target);
-                FileWriter.WriteSolution(solution.Solution, solutionPuzzleFile);
+                FileWriter.WriteSolution(solution, solutionPuzzleFile);
                 FileWriter.WriteSolutionDetails(solution, additionalInformationFile);
                                
             }

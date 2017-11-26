@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PuzzleSolver;
 using FileManager;
 using System.Linq;
+using System.IO;
 
 namespace FifteenTest
 {
@@ -14,6 +15,7 @@ namespace FifteenTest
         {
             byte[,] testTab = { { 0, 1 }, { 2, 3 } };
             Puzzle newPuzzle = new Puzzle(testTab);
+            
 
             byte[,] tabFromFile = FileReader.ReadPuzzleData("C:\\Users\\Ayron\\Desktop\\testPuzzle.txt");
             Puzzle puzzleFromFile = new Puzzle(tabFromFile);

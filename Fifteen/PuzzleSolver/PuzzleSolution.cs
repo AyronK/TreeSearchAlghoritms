@@ -19,6 +19,6 @@ namespace PuzzleSolver
 
         public Puzzle LastState { get; set; }
 
-        public bool wasSolved { get; set; } = false;
+        public bool IsSolved { get; set; } = false;
     }
 }

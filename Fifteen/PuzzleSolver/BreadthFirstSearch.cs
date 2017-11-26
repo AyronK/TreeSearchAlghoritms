@@ -18,8 +18,8 @@ namespace PuzzleSolver
             SearchOrder = searchOrder;
         }
 
-        public BreadthFirstSearch(string searchOrder)
-        {
+        public BreadthFirstSearch(string searchOrder) : base()
+        {           
             for( int i = 0; i < 4; i++ )
             {
                 switch(searchOrder[i].ToString())
@@ -59,7 +59,7 @@ namespace PuzzleSolver
             }
         }
 
-        private Direction[] searchOrder = null;
+        private Direction[] searchOrder = new Direction[4];
 
         private PuzzleSolution solution = null;
 
@@ -96,7 +96,7 @@ namespace PuzzleSolver
                         if (newState.Equals(target))
                         {
                             solution.LastState = newState;
-                            solution.wasSolved = true;
+                            solution.IsSolved = true;
                             return;
                         }
                         queue.Enqueue(newState);

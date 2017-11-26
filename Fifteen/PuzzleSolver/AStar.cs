@@ -64,7 +64,7 @@ namespace PuzzleSolver
                         if (newState.Equals(target))
                         {
                             solution.LastState = newState;
-                            solution.wasSolved = true;
+                            solution.IsSolved = true;
                             solution.Solution.Add(searchOrder[moveId]);
                             return;
                         }

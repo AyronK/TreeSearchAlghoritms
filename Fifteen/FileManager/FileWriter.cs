@@ -12,9 +12,10 @@ namespace FileManager
     {
         public static void WriteSolution(PuzzleSolution solution, string path)
         {
+            File.Delete(path);
             using (StreamWriter solutionFile = File.AppendText(path))
             {
-                if (solution.wasSolved)
+                if (solution.IsSolved)
                 {
                     solutionFile.WriteLine(solution.Solution.Count);
                     foreach (Direction direction in solution.Solution)
@@ -47,9 +48,10 @@ namespace FileManager
 
         public static void WriteSolutionDetails(PuzzleSolution solution, string path)
         {
+            File.Delete(path);
             using (StreamWriter solutionFile = File.AppendText(path))
             {
-                if (solution.wasSolved)
+                if (solution.IsSolved)
                 {
                     solutionFile.WriteLine(solution.Solution.Count);
                 }
@@ -60,7 +62,7 @@ namespace FileManager
                 solutionFile.WriteLine(solution.VisitedCount);
                 solutionFile.WriteLine(solution.ProcessedCount);
                 solutionFile.WriteLine(solution.RecursionDepth);
-                solutionFile.WriteLine(solution.Duration);
+                solutionFile.WriteLine(solution.Duration.ToString("ss\\.fff"));
             }
         }
     }

@@ -220,7 +220,7 @@ namespace FifteenTest
             var solution = astar.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
-            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionHAMN.txt");
+            FileWriter.WriteSolution(solution, @"solutionHAMN.txt");
         }
 
 
