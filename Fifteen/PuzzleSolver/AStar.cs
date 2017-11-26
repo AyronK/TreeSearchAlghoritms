@@ -50,7 +50,7 @@ namespace PuzzleSolver
                 }
 
                 var possibleMoves = currentState.GetPossibleMoves();
-                numberOfPossibleMoves = possibleMoves.Count();
+                //numberOfPossibleMoves = possibleMoves.Count();
                 Puzzle[] possibleNewStates = new Puzzle[4];
 
                 for (int moveId = 0; moveId < searchOrder.Length; moveId++)
@@ -128,9 +128,9 @@ namespace PuzzleSolver
         private int FindNextStatesIndex()
         {
             int min = 0;
-            for (int index = 0; index < numberOfPossibleMoves; index++)
+            for (int index = 0; index < 4; index++)
             {
-                if (heuristic[index] < heuristic[min])
+                if (heuristic[index] < heuristic[min] && heuristic[index]!= 0)
                 {
                     min = index;
                 }
