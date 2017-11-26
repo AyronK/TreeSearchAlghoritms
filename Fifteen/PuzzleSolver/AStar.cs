@@ -38,12 +38,13 @@ namespace PuzzleSolver
         {
             Queue<Puzzle> queue = new Queue<Puzzle>();
             queue.Enqueue(puzzle);
-            heuristic = new int[4] { Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue };
 
             while (queue.Count != 0)
             {
                 solution.RecursionDepth++;
                 solution.MovesMade++;
+                heuristic = new int[4] { Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue };
+
                 var currentState = queue.Dequeue();
                 if (!solution.Visited.Contains(currentState))
                 {
@@ -129,10 +130,7 @@ namespace PuzzleSolver
         private int FindNextStatesIndex()
         {
             int min = 0;
-            while (heuristic[min] == 0)
-            {
-                min++;
-            }
+
             for (int index = 0; index < 4; index++)
             {
                 if (heuristic[index] < heuristic[min] && heuristic[index] != 0)

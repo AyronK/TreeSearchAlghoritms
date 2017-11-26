@@ -180,28 +180,27 @@ namespace FifteenTest
             var solution = bfs.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
-            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionBFS.txt");
+        //    FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionBFS.txt");
         }
 
         [TestMethod]
         public void AStarHammingTest()
         {
+            byte[,] testTab =
+                {
+                    { 1, 2, 3, 4, },
+                    { 5, 6, 7, 8, },
+                    { 9, 10, 15, 11, },
+                    { 13, 14, 12, 0, }
+            };
+
             //byte[,] testTab =
             //    {
             //        { 1, 2, 3, 4 },
-            //        { 5, 7, 0, 8},
+            //        { 5, 0, 7, 8},
             //        { 9, 6, 11, 12 },
             //        { 13, 10, 14, 15 }
             //};
-
-
-            byte[,] testTab =
-                {
-                    { 1, 2, 3, 4 },
-                    { 5, 0, 7, 8},
-                    { 9, 6, 11, 12 },
-                    { 13, 10, 14, 15 }
-            };
 
 
             byte[,] targetTab =
@@ -249,8 +248,8 @@ namespace FifteenTest
             var solution = astar.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
-            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionMANH.txt");
-            FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsMANH.txt");
+          //  FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionMANH.txt");
+          //  FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsMANH.txt");
 
         }
     }
