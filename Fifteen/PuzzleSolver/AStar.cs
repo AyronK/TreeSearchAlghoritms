@@ -150,20 +150,5 @@ namespace PuzzleSolver
             }
             return movesToMake;
         }
-
-        private int FindNextStatesIndex()
-        {
-            int min = 0;
-
-            for (int index = 0; index < 4; index++)
-            {
-                if (heuristic[index] < heuristic[min] && heuristic[index] != 0)
-                {
-                    min = index;
-                }
-            }
-
-            return min;
-        }
     }
 }
