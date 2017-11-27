@@ -81,7 +81,7 @@ namespace PuzzleSolver
 
             while (queue.Count != 0)
             {
-                solution.RecursionDepth++;
+                solution.MaxRecursionDepth++;
                 var currentState = queue.Dequeue();
                 solution.Visited.Add(currentState);
                 

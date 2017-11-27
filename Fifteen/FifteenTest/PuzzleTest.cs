@@ -186,11 +186,19 @@ namespace FifteenTest
         [TestMethod]
         public void DFSTest()
         {
+            //byte[,] testTab =
+            //    {
+            //        { 1, 2, 3, 4 },
+            //        { 5, 6 , 7, 8},
+            //        { 9, 11, 0, 12 },
+            //        { 13, 10, 14, 15 }
+            //};
+
             byte[,] testTab =
-                {
+                 {
                     { 1, 2, 3, 4 },
                     { 5, 6 , 7, 8},
-                    { 9, 0, 11, 12 },
+                    { 0, 9, 11, 12 },
                     { 13, 10, 14, 15 }
             };
 
@@ -210,6 +218,7 @@ namespace FifteenTest
             var solution = dfs.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
+            
             //    FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionBFS.txt");
         }
 

@@ -40,7 +40,7 @@ namespace PuzzleSolver
             }
         }
 
-        public int MaxRecursionDepth = 20;
+        public int MaxRecursionDepth = 20; //roboczo
 
         public Direction[] SearchOrder
         {
@@ -85,7 +85,7 @@ namespace PuzzleSolver
             {
                 var currentState = queue.Dequeue();
                 //runDFS(currentState, target);
-
+                currentState.Cost = 0; 
                 solution.Visited.Add(currentState);
                 
                 var possibleMoves = currentState.GetPossibleMoves();
@@ -96,6 +96,7 @@ namespace PuzzleSolver
                     {
                         var newState = new Puzzle(currentState.ToMatrix());
                         newState.MoveBlank(searchOrder[moveId]);
+                        newState.Cost = currentState.Cost + 1;
 
                         if (newState.Equals(target))
                         {
@@ -122,7 +123,8 @@ namespace PuzzleSolver
         private void runDFS(Puzzle currentState, Puzzle target)
         {
             solution.Visited.Add(currentState);
-            solution.RecursionDepth++;
+            solution.RecursionDepth = currentState.Cost;
+            solution.MaxRecursionDepth++;
 
             var possibleMoves = currentState.GetPossibleMoves();
             for (int moveId = 0; moveId < searchOrder.Length; moveId++)
@@ -131,13 +133,13 @@ namespace PuzzleSolver
                 {
                     if (solution.RecursionDepth == MaxRecursionDepth)
                     {
-                        solution.IsSolved = false;
-                        solution.RecursionDepth--;
+                        solution.MaxRecursionDepth++;
                         return;
                     }
 
                     var newState = new Puzzle(currentState.ToMatrix());
                     newState.MoveBlank(searchOrder[moveId]);
+                    newState.Cost = currentState.Cost + 1;
 
                     if (newState.Equals(target))
                     {

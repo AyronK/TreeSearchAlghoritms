@@ -40,7 +40,7 @@ namespace PuzzleSolver
 
             while (queue.Count != 0)
             {
-                solution.RecursionDepth++;
+                solution.MaxRecursionDepth++;
                 solution.MovesMade++;
                 heuristic = new int[4] { Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue };
 
