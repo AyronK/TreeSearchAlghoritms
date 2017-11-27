@@ -18,9 +18,10 @@ namespace PuzzleSolver
         private Direction[] searchOrder = null;
 
         private PuzzleSolution solution = null;
-        private int[] tilesinWrongPlaces = new int[4];
-        private int[] tilesToCorrectOrder = new int[4];
-        private int[] heuristic = new int[4];
+
+        private List<int> tilesinWrongPlaces = new List<int>(new int[4]); 
+        private List<int> tilesToCorrectOrder = new List<int>(new int[4]);
+        private List<int> heuristic = new List<int>(new int[4]);
 
         public PuzzleSolution Solve(Puzzle unsolved, Puzzle target)
         {
@@ -42,13 +43,13 @@ namespace PuzzleSolver
             {
                 solution.MaxRecursionDepth++;
                 solution.MovesMade++;
-                heuristic = new int[4] { Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue };
+                heuristic = new List<int> { Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue };
 
                 var currentState = queue.Dequeue();
                 solution.Visited.Add(currentState);
 
                 var possibleMoves = currentState.GetPossibleMoves();
-                Puzzle[] possibleNewStates = new Puzzle[4];
+                List<Puzzle> possibleNewStates = new List<Puzzle>(new Puzzle[4]); 
 
                 for (int moveId = 0; moveId < searchOrder.Length; moveId++)
                 {
@@ -84,8 +85,32 @@ namespace PuzzleSolver
                         }
                     }
                 }
-                queue.Enqueue(possibleNewStates[FindNextStatesIndex()]);
-                solution.Solution.Add(searchOrder[FindNextStatesIndex()]);
+                
+                List<int> heuristicSorted = new List<int>(new int[4]);
+                for (int i = 0; i<4; i++)
+                {
+                    heuristicSorted[i] = heuristic[i];
+                 }
+                heuristicSorted.Sort();
+
+                int index = 0;
+                while (index < 4)
+                {
+                    int value = heuristicSorted[index];
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (heuristic[i] == value )
+                        {
+                            if(possibleNewStates[i] != null)
+                            {
+                                queue.Enqueue(possibleNewStates[i]);
+                                solution.Solution.Add(searchOrder[i]);
+                            }
+                            index++;
+                        }
+                    }
+                }
 
                 solution.Processed.Add(currentState);
             }
@@ -137,6 +162,7 @@ namespace PuzzleSolver
                     min = index;
                 }
             }
+
             return min;
         }
     }
