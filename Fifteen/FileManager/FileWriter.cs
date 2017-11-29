@@ -47,7 +47,7 @@ namespace FileManager
         }
 
         public static void WriteSolutionDetails(PuzzleSolution solution, string path)
-        {
+        {           
             File.Delete(path);
             using (StreamWriter solutionFile = File.AppendText(path))
             {
@@ -62,7 +62,7 @@ namespace FileManager
                 solutionFile.WriteLine(solution.VisitedCount);
                 solutionFile.WriteLine(solution.ProcessedCount);
                 solutionFile.WriteLine(solution.MaxReachedRecursionDepth);
-                solutionFile.WriteLine(solution.Duration.ToString("ss\\.fff"));
+                solutionFile.WriteLine(solution.Duration.ToString("mm\\.ss\\.fff"));
             }
         }
     }

@@ -217,7 +217,7 @@ namespace FifteenTest
             DepthFirstSearch dfs = new DepthFirstSearch(new Direction[] { Direction.Right, Direction.Down, Direction.Up, Direction.Left });
 
             var solution = dfs.Solve(newPuzzle, target);
-
+            
             FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionDFS.txt");
             FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsDFS.txt");
 
@@ -307,7 +307,6 @@ namespace FifteenTest
             astar.heuristicType = "manh";
 
             var solution = astar.Solve(newPuzzle, target);
-
             Assert.IsTrue(solution.LastState.Equals(target));
             FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionMANH.txt");
             FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsMANH.txt");
