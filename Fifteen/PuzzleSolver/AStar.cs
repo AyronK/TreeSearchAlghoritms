@@ -98,34 +98,34 @@ namespace PuzzleSolver
                         }
                     }
                 }
-                
-                // sprawdzic czy wystarczy dodawac wszystkie opcje jezeli jest double min 
 
-                List<int> heuristicSorted = new List<int>(new int[4]);
-                for (int i = 0; i<4; i++)
-                {
-                    heuristicSorted[i] = heuristic[i];
-                 }
-                heuristicSorted.Sort();
 
-                int index = 0;
-                while (index < 4)
-                {
-                    int value = heuristicSorted[index];
-
+                    List<int> heuristicSorted = new List<int>(new int[4]);
                     for (int i = 0; i < 4; i++)
                     {
-                        if (heuristic[i] == value )
+                        heuristicSorted[i] = heuristic[i];
+                    }
+                    heuristicSorted.Sort();
+
+                    int index = 0;
+                    while (index < 4)
+                    {
+                        int value = heuristicSorted[index];
+
+                        for (int i = 0; i < 4; i++)
                         {
-                            if(possibleNewStates[i] != null)
+                            if (heuristic[i] == value)
                             {
-                                queue.Enqueue(possibleNewStates[i]);
-                                solution.Solution.Add(searchOrder[i]);
+                                if (possibleNewStates[i] != null)
+                                {
+                                    queue.Enqueue(possibleNewStates[i]);
+                                    solution.Solution.Add(searchOrder[i]);
+                                }
+                                index++;
                             }
-                            index++;
                         }
                     }
-                }
+
 
                 solution.Processed.Add(currentState);
             }

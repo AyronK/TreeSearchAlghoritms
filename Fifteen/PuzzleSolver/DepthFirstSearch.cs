@@ -21,9 +21,9 @@ namespace PuzzleSolver
 
         public DepthFirstSearch(string searchOrder)
         {
-            for( int i = 0; i < 4; i++ )
+            for (int i = 0; i < 4; i++)
             {
-                switch(searchOrder[i].ToString())
+                switch (searchOrder[i].ToString())
                 {
                     case "L":
                         SearchOrder[i] = Direction.Left;
@@ -32,7 +32,7 @@ namespace PuzzleSolver
                         SearchOrder[i] = Direction.Right;
                         break;
                     case "U":
-                        SearchOrder[i] = Direction. Up;
+                        SearchOrder[i] = Direction.Up;
                         break;
                     case "D":
                         SearchOrder[i] = Direction.Down;
@@ -81,12 +81,13 @@ namespace PuzzleSolver
 
         private void runDFS(Puzzle currentState, Puzzle target)
         {
-            solution.Visited.Add(currentState);
             if (currentState.Cost > MaxRecursionDepth || solution.IsSolved)
             {
                 return;
             }
-            if ( solution.MaxReachedRecursionDepth < currentState.Cost)
+            solution.Visited.Add(currentState);
+
+            if (solution.MaxReachedRecursionDepth < currentState.Cost)
             {
                 solution.MaxReachedRecursionDepth = currentState.Cost;
             }

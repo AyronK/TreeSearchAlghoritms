@@ -189,10 +189,10 @@ namespace FifteenTest
         {
             byte[,] testTab =
                 {
-                    { 1, 2, 3, 4 },
-                    { 5, 6 , 7, 8},
-                    { 9, 11, 0, 12 },
-                    { 13, 10, 14, 15 }
+                    { 1, 2, 0, 4 },
+                    { 5, 6 , 3, 7},
+                    { 9, 10, 11, 8 },
+                    { 13, 14, 15, 12 }
             };
 
             //byte[,] testTab =
@@ -214,7 +214,7 @@ namespace FifteenTest
             Puzzle newPuzzle = new Puzzle(testTab);
             Puzzle target = new Puzzle(targetTab);
 
-            DepthFirstSearch dfs = new DepthFirstSearch(new Direction[] { Direction.Left, Direction.Down, Direction.Up, Direction.Right });
+            DepthFirstSearch dfs = new DepthFirstSearch(new Direction[] { Direction.Right, Direction.Down, Direction.Up, Direction.Left });
 
             var solution = dfs.Solve(newPuzzle, target);
 
@@ -230,8 +230,8 @@ namespace FifteenTest
             byte[,] testTab =
                 {
                     { 1, 2, 3, 4, },
-                    { 5, 6, 7, 0, },
-                    { 9, 10, 11, 8, },
+                    { 5, 10, 0, 7, },
+                    { 9, 11, 6, 8, },
                     { 13, 14, 15, 12 }
             };
 
