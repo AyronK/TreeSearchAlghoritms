@@ -36,9 +36,9 @@ namespace Program
                     case "bfs":
                         solver = new BreadthFirstSearch(details);
                         break;
-                    //case "dfs":
-                    //    solver = new DepthFirstSearch();
-                    //    break;
+                    case "dfs":
+                        solver = new DepthFirstSearch(details);
+                        break;
                     case "astr":
                         solver = new AStar();
                         ((AStar)solver).heuristicType = details;

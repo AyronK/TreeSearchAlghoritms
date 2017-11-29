@@ -67,7 +67,9 @@ namespace PuzzleSolver
         {
             solution = new PuzzleSolution();
             DateTime startTime = DateTime.Now;
-
+            
+            unsolved.Cost = 0;
+            solution.MaxReachedRecursionDepth = 0;
             Proceed(unsolved, target);
 
             solution.Duration = DateTime.Now - startTime;
@@ -78,13 +80,17 @@ namespace PuzzleSolver
         {
             Queue<Puzzle> queue = new Queue<Puzzle>();
             queue.Enqueue(puzzle);
-
+            puzzle.Cost = 0;
             while (queue.Count != 0)
             {
-                solution.MaxRecursionDepth++;
                 var currentState = queue.Dequeue();
                 solution.Visited.Add(currentState);
-                
+                solution.RecursionDepth = currentState.Cost;
+                if(solution.MaxReachedRecursionDepth < solution.RecursionDepth)
+                {
+                    solution.MaxReachedRecursionDepth = solution.RecursionDepth;
+                }
+                   
                 var possibleMoves = currentState.GetPossibleMoves();
                 for (int moveId = 0; moveId < searchOrder.Length; moveId++)
                 {                    
@@ -92,11 +98,16 @@ namespace PuzzleSolver
                     {
                         var newState = new Puzzle(currentState.ToMatrix());
                         newState.MoveBlank(searchOrder[moveId]);
+                        newState.Cost = currentState.Cost + 1;
                         solution.Solution.Add(searchOrder[moveId]);
                         if (newState.Equals(target))
                         {
                             solution.LastState = newState;
                             solution.IsSolved = true;
+                            if (solution.MaxReachedRecursionDepth < newState.Cost)
+                            {
+                                solution.MaxReachedRecursionDepth = newState.Cost;
+                            }
                             return;
                         }
                         queue.Enqueue(newState);

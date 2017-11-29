@@ -180,27 +180,28 @@ namespace FifteenTest
             var solution = bfs.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
-        //    FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionBFS.txt");
+            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionBFS.txt");
+            FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsBFS.txt");
         }
 
         [TestMethod]
         public void DFSTest()
         {
-            //byte[,] testTab =
-            //    {
-            //        { 1, 2, 3, 4 },
-            //        { 5, 6 , 7, 8},
-            //        { 9, 11, 0, 12 },
-            //        { 13, 10, 14, 15 }
-            //};
-
             byte[,] testTab =
-                 {
+                {
                     { 1, 2, 3, 4 },
                     { 5, 6 , 7, 8},
-                    { 0, 9, 11, 12 },
+                    { 9, 11, 0, 12 },
                     { 13, 10, 14, 15 }
             };
+
+            //byte[,] testTab =
+            //     {
+            //        { 1, 2, 3, 4 },
+            //        { 5, 6 , 7, 8},
+            //        { 0, 9, 11, 12 },
+            //        { 13, 10, 14, 15 }
+            //};
 
 
             byte[,] targetTab =
@@ -213,13 +214,14 @@ namespace FifteenTest
             Puzzle newPuzzle = new Puzzle(testTab);
             Puzzle target = new Puzzle(targetTab);
 
-            DepthFirstSearch dfs = new DepthFirstSearch(new Direction[] { Direction.Down, Direction.Right, Direction.Up, Direction.Left });
+            DepthFirstSearch dfs = new DepthFirstSearch(new Direction[] { Direction.Left, Direction.Down, Direction.Up, Direction.Right });
 
             var solution = dfs.Solve(newPuzzle, target);
 
+            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionDFS.txt");
+            FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsDFS.txt");
+
             Assert.IsTrue(solution.LastState.Equals(target));
-            
-            //    FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionBFS.txt");
         }
 
         [TestMethod]
@@ -233,13 +235,13 @@ namespace FifteenTest
                     { 13, 14, 15, 12 }
             };
 
-    //        byte[,] testTab =
-    //          {
-    //                { 1, 2, 3, 4, },
-    //                { 5, 6, 8, 11, },
-    //                { 9, 10, 0, 7, },
-    //                { 13, 14, 15, 12 }
-    //        };
+            //        byte[,] testTab =
+            //          {
+            //                { 1, 2, 3, 4, },
+            //                { 5, 6, 8, 11, },
+            //                { 9, 10, 0, 7, },
+            //                { 13, 14, 15, 12 }
+            //        };
 
             //byte[,] testTab =
             //    {
@@ -266,7 +268,8 @@ namespace FifteenTest
             var solution = astar.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
-            FileWriter.WriteSolution(solution, @"solutionHAMN.txt");
+            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionHamm.txt");
+            FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsHamm.txt");
         }
 
 
@@ -306,8 +309,8 @@ namespace FifteenTest
             var solution = astar.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
-          //  FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionMANH.txt");
-          //  FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsMANH.txt");
+            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionMANH.txt");
+            FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsMANH.txt");
 
         }
     }

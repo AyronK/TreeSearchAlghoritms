@@ -61,7 +61,7 @@ namespace FileManager
                 }
                 solutionFile.WriteLine(solution.VisitedCount);
                 solutionFile.WriteLine(solution.ProcessedCount);
-                solutionFile.WriteLine(solution.RecursionDepth);
+                solutionFile.WriteLine(solution.MaxReachedRecursionDepth);
                 solutionFile.WriteLine(solution.Duration.ToString("ss\\.fff"));
             }
         }

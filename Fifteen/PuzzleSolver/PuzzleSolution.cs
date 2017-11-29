@@ -12,7 +12,7 @@ namespace PuzzleSolver
         public int VisitedCount => Visited.Count;
         public int ProcessedCount => Processed.Count;
         public int RecursionDepth { get; internal set; }
-        public int MaxRecursionDepth { get; internal set; }
+        public int MaxReachedRecursionDepth { get; internal set; }
         public int MovesMade { get; internal set; }
         public TimeSpan Duration { get; internal set; } = TimeSpan.Zero;
         public List<Puzzle> Visited { get; set; } = new List<Puzzle>();

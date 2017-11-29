@@ -28,6 +28,9 @@ namespace PuzzleSolver
             solution = new PuzzleSolution();
             DateTime startTime = DateTime.Now;
 
+            unsolved.Cost = 0;
+            solution.RecursionDepth = 0;
+            solution.MaxReachedRecursionDepth = 0;
             Proceed(unsolved, target);
 
             solution.Duration = DateTime.Now - startTime;
@@ -41,12 +44,16 @@ namespace PuzzleSolver
 
             while (queue.Count != 0)
             {
-                solution.MaxRecursionDepth++;
                 solution.MovesMade++;
                 heuristic = new List<int> { Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue };
 
                 var currentState = queue.Dequeue();
                 solution.Visited.Add(currentState);
+                solution.RecursionDepth = currentState.Cost;
+                if (solution.MaxReachedRecursionDepth < solution.RecursionDepth)
+                {
+                    solution.MaxReachedRecursionDepth = solution.RecursionDepth;
+                }
 
                 var possibleMoves = currentState.GetPossibleMoves();
                 List<Puzzle> possibleNewStates = new List<Puzzle>(new Puzzle[4]); 
@@ -56,6 +63,7 @@ namespace PuzzleSolver
                     if (possibleMoves.Contains(searchOrder[moveId]))
                     {
                         var newState = new Puzzle(currentState.ToMatrix());
+                        newState.Cost = currentState.Cost + 1;
                         newState.MoveBlank(searchOrder[moveId]);
 
 
@@ -64,6 +72,11 @@ namespace PuzzleSolver
                             solution.LastState = newState;
                             solution.IsSolved = true;
                             solution.Solution.Add(searchOrder[moveId]);
+                            solution.RecursionDepth = newState.Cost;
+                            if (solution.MaxReachedRecursionDepth < solution.RecursionDepth)
+                            {
+                                solution.MaxReachedRecursionDepth = solution.RecursionDepth;
+                            }
                             return;
                         }
 
@@ -86,6 +99,8 @@ namespace PuzzleSolver
                     }
                 }
                 
+                // sprawdzic czy wystarczy dodawac wszystkie opcje jezeli jest double min 
+
                 List<int> heuristicSorted = new List<int>(new int[4]);
                 for (int i = 0; i<4; i++)
                 {
