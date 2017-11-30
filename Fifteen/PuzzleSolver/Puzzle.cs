@@ -37,6 +37,7 @@ namespace PuzzleSolver
         public int ColumnOfBlank { get; private set; }
 
         public int Cost { get; set; } // do zapisywania głębokości rekursji 
+        public List<Direction> MovesMade { get; set; } = new List<Direction>();
 
         public byte this[int row, int column] => GetValue(row, column);
 

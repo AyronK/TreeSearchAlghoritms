@@ -65,13 +65,16 @@ namespace PuzzleSolver
                         var newState = new Puzzle(currentState.ToMatrix());
                         newState.Cost = currentState.Cost + 1;
                         newState.MoveBlank(searchOrder[moveId]);
+                        newState.MovesMade = new List<Direction>( currentState.MovesMade);
+                        newState.MovesMade.Add(searchOrder[moveId]);
 
 
                         if (newState.Equals(target))
                         {
                             solution.LastState = newState;
                             solution.IsSolved = true;
-                            solution.Solution.Add(searchOrder[moveId]);
+                            solution.Solution.Clear();
+                            solution.Solution.AddRange(newState.MovesMade);
                             solution.RecursionDepth = newState.Cost;
                             if (solution.MaxReachedRecursionDepth < solution.RecursionDepth)
                             {
@@ -119,7 +122,7 @@ namespace PuzzleSolver
                                 if (possibleNewStates[i] != null)
                                 {
                                     queue.Enqueue(possibleNewStates[i]);
-                                    solution.Solution.Add(searchOrder[i]);
+                                    //solution.Solution.Add(searchOrder[i]);
                                 }
                                 index++;
                             }

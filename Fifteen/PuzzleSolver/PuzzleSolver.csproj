@@ -61,6 +61,7 @@
     <Compile Include="AStar.cs" />
     <Compile Include="DepthFirstSearch.cs" />
     <Compile Include="BreadthFirstSearch.cs" />
+    <Compile Include="DijkstraAlgorithm.cs" />
     <Compile Include="DirectionEnum.cs" />
     <Compile Include="IPuzzleSolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -41,7 +41,7 @@ namespace PuzzleSolver
             }
         }
 
-        private const int MaxRecursionDepth = 20; //roboczo
+        private const int MaxRecursionDepth = 10; 
 
         public Direction[] SearchOrder
         {
@@ -81,7 +81,7 @@ namespace PuzzleSolver
 
         private void runDFS(Puzzle currentState, Puzzle target)
         {
-            if (currentState.Cost > MaxRecursionDepth || solution.IsSolved)
+            if (currentState.Cost >= MaxRecursionDepth || solution.IsSolved)
             {
                 return;
             }
@@ -100,12 +100,15 @@ namespace PuzzleSolver
                     var newState = new Puzzle(currentState.ToMatrix());
                     newState.MoveBlank(searchOrder[moveId]);
                     newState.Cost = currentState.Cost + 1;
+                    newState.MovesMade = new List<Direction>(currentState.MovesMade);
+                    newState.MovesMade.Add(searchOrder[moveId]);
 
                     if (newState.Equals(target))
                     {
                         solution.LastState = newState;
                         solution.IsSolved = true;
-                        solution.Solution.Add(searchOrder[moveId]);
+                        solution.Solution.Clear();
+                        solution.Solution.AddRange(newState.MovesMade);
                         if (solution.MaxReachedRecursionDepth < newState.Cost)
                         {
                             solution.MaxReachedRecursionDepth = newState.Cost;
@@ -115,7 +118,6 @@ namespace PuzzleSolver
 
                     if (!solution.Visited.Exists(el => el.Equals(newState)))
                     {
-                        solution.Solution.Add(searchOrder[moveId]);
                         runDFS(newState, target);
                     }
 

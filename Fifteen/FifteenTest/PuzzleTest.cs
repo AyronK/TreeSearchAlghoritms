@@ -180,8 +180,8 @@ namespace FifteenTest
             var solution = bfs.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
-            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionBFS.txt");
-            FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsBFS.txt");
+       //     FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionBFS.txt");
+       //     FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsBFS.txt");
         }
 
         [TestMethod]
@@ -218,8 +218,8 @@ namespace FifteenTest
 
             var solution = dfs.Solve(newPuzzle, target);
             
-            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionDFS.txt");
-            FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsDFS.txt");
+       //     FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionDFS.txt");
+       //     FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsDFS.txt");
 
             Assert.IsTrue(solution.LastState.Equals(target));
         }
@@ -227,21 +227,21 @@ namespace FifteenTest
         [TestMethod]
         public void AStarHammingTest()
         {
-            byte[,] testTab =
-                {
-                    { 1, 2, 3, 4, },
-                    { 5, 10, 0, 7, },
-                    { 9, 11, 6, 8, },
-                    { 13, 14, 15, 12 }
-            };
+            //byte[,] testTab =
+            //    {
+            //        { 1, 2, 3, 4, },
+            //        { 5, 6, 7, 8, },
+            //        { 9, 10, 12, 15, },
+            //        { 13, 14, 11, 0 }
+            //};
 
-            //        byte[,] testTab =
-            //          {
-            //                { 1, 2, 3, 4, },
-            //                { 5, 6, 8, 11, },
-            //                { 9, 10, 0, 7, },
-            //                { 13, 14, 15, 12 }
-            //        };
+            byte[,] testTab =
+              {
+                            { 1, 2, 3, 4, },
+                            { 5, 6, 7, 8, },
+                            { 9, 10, 11, 12, },
+                            { 13, 14, 0, 15 }
+                    };
 
             //byte[,] testTab =
             //    {
@@ -268,8 +268,8 @@ namespace FifteenTest
             var solution = astar.Solve(newPuzzle, target);
 
             Assert.IsTrue(solution.LastState.Equals(target));
-            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionHamm.txt");
-            FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsHamm.txt");
+            FileWriter.WriteSolution(solution, @"solutionHamm.txt");
+            FileWriter.WriteSolutionDetails(solution, @"detailsHamm.txt");
         }
 
 
@@ -308,8 +308,8 @@ namespace FifteenTest
 
             var solution = astar.Solve(newPuzzle, target);
             Assert.IsTrue(solution.LastState.Equals(target));
-            FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionMANH.txt");
-            FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsMANH.txt");
+        //    FileWriter.WriteSolution(solution, @"C:\Users\Ayron\Desktop\solutionMANH.txt");
+        //    FileWriter.WriteSolutionDetails(solution, @"C:\Users\Ayron\Desktop\detailsMANH.txt");
 
         }
     }

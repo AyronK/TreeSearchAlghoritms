@@ -85,13 +85,14 @@ namespace PuzzleSolver
             {
                 var currentState = queue.Dequeue();
                 solution.Visited.Add(currentState);
+                var possibleMoves = currentState.GetPossibleMoves();
                 solution.RecursionDepth = currentState.Cost;
                 if(solution.MaxReachedRecursionDepth < solution.RecursionDepth)
                 {
                     solution.MaxReachedRecursionDepth = solution.RecursionDepth;
                 }
                    
-                var possibleMoves = currentState.GetPossibleMoves();
+
                 for (int moveId = 0; moveId < searchOrder.Length; moveId++)
                 {                    
                     if (possibleMoves.Contains(searchOrder[moveId]))
@@ -99,11 +100,15 @@ namespace PuzzleSolver
                         var newState = new Puzzle(currentState.ToMatrix());
                         newState.MoveBlank(searchOrder[moveId]);
                         newState.Cost = currentState.Cost + 1;
-                        solution.Solution.Add(searchOrder[moveId]);
+                        newState.MovesMade = new List<Direction>(currentState.MovesMade);
+                        newState.MovesMade.Add(searchOrder[moveId]);
+
                         if (newState.Equals(target))
                         {
                             solution.LastState = newState;
                             solution.IsSolved = true;
+                            solution.Solution.Clear();
+                            solution.Solution.AddRange(newState.MovesMade);
                             if (solution.MaxReachedRecursionDepth < newState.Cost)
                             {
                                 solution.MaxReachedRecursionDepth = newState.Cost;
